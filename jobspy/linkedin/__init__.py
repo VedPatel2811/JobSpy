@@ -156,6 +156,7 @@ class LinkedIn(Scraper):
                     try:
                         fetch_desc = scraper_input.linkedin_fetch_description
                         job_post = self._process_job(job_card, job_id, fetch_desc)
+                        
                         if job_post:
                             job_list.append(job_post)
                         if not continue_search():
@@ -168,6 +169,7 @@ class LinkedIn(Scraper):
                 start += len(job_cards)
 
         job_list = job_list[: scraper_input.results_wanted]
+        
         return JobResponse(jobs=job_list)
 
     def _process_job(
@@ -217,9 +219,11 @@ class LinkedIn(Scraper):
             except:
                 date_posted = None
         job_details = {}
-        if full_descr:
-            job_details = self._get_job_details(job_id)
-            description = job_details.get("description")
+       
+        
+        #if full_descr:
+        job_details = self._get_job_details(job_id)
+        description = job_details.get("description")
         is_remote = is_job_remote(title, description, location)
 
         return JobPost(
