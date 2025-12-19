@@ -306,7 +306,7 @@ class ScraperInput(BaseModel):
     google_search_term: str | None = None
 
     location: str | None = None
-    country: Country | None = Country.USA
+    country: Country | None = Country.CANADA
     distance: int | None = None
     is_remote: bool = False
     job_type: JobType | None = None

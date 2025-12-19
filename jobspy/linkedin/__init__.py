@@ -221,9 +221,9 @@ class LinkedIn(Scraper):
         job_details = {}
        
         
-        #if full_descr:
-        job_details = self._get_job_details(job_id)
-        description = job_details.get("description")
+        if full_descr:
+            job_details = self._get_job_details(job_id)
+            description = job_details.get("description")
         is_remote = is_job_remote(title, description, location)
 
         return JobPost(
