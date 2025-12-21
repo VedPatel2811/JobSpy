@@ -1,4 +1,5 @@
 import csv
+import json
 from jobspy import scrape_jobs
 
 jobs = scrape_jobs(
@@ -16,4 +17,25 @@ jobs = scrape_jobs(
 )
 print(f"Found {len(jobs)} jobs")
 print(jobs.head())
-jobs.to_csv("jobs.csv", quoting=csv.QUOTE_NONNUMERIC, escapechar="\\", index=False) # to_excel
+#jobs.to_csv("jobs.csv", quoting=csv.QUOTE_NONNUMERIC, escapechar="\\", index=False) # to_excel
+jobs_dict = jobs.to_dict(orient="records")
+for job in jobs_dict:
+    for key, value in job.items():
+        if str(value) == 'nan':
+            job[key] = None
+
+with open("jobs.json", "w", encoding="utf-8") as f:
+    json.dump(
+        jobs_dict,
+        f,
+        indent=4,
+        ensure_ascii=False,
+        default=str
+    )
+#with open("jobs.json", "w", encoding="utf-8") as f:
+    #json.dump(
+    #    jobs.to_dict(orient="records"),
+   #     f,
+  #      indent=4,
+ #       ensure_ascii=False
+#    )
